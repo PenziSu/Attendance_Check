@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>考勤查詢功能</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+
+       <form action="attPrint.php" method="POST">
+       <tr><td>請輸入員工編號:</td><td><input type="text" name="EmpID" size="8"/></td>
+       <br>
+       <br>
+       <tr><td>開始日期:</td><rd><input type="date" name="start_date" size="8"></td><tr>
+       <br>
+       <br>
+       <tr><td>結束日期:</td><rd><input type="date" name="end_date" size="8"></td><tr>
+       <br>
+       <br>
+	   <!--<input type="radio" name="display" value="pageShow" checked>網頁呈現
+	   <input type="radio" name="display" value="sentEmail">寄送信件</p>
+	   <br>-->
+       <input type="submit" name="sending" value="送出">
+	   
+       </form>
+    </body>
+</html>

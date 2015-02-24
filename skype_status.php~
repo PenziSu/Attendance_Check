@@ -1,0 +1,71 @@
+ 1 <?php
+ 2 
+ 3 function get_skype_status($username, $image = false, $icon = false ){
+ 4     //creating url
+ 5     //if you need small icon
+ 6     if($image && $icon)
+ 7     {
+ 8     /***************************************
+ 9         Possible types of images:
+10         
+11         * balloon            - Balloon style 
+12         * bigclassic        - Big Classic Style 
+13         * smallclassic        - Small Classic Style 
+14         * smallicon        - Small Icon (transparent background) 
+15         * mediumicon        - Medium Icon 
+16         * dropdown-white    - Dropdown White Background 
+17         * dropdown-trans    - Dropdown Transparent Background
+18         ****************************************/
+19         return "http://mystatus.skype.com/smallicon/".$username;
+20     }
+21     //if you need image
+22     else if($image)
+23     {
+24         return "http://mystatus.skype.com/".$username;
+25     }
+26     //or just text
+27     else
+28     {
+29     /***************************************
+30         Possible status  values:
+31          NUM        TEXT                DESCRIPTION
+32         * 0     UNKNOWN             Not opted in or no data available. 
+33         * 1     OFFLINE                 The user is Offline 
+34         * 2     ONLINE                  The user is Online 
+35         * 3     AWAY                    The user is Away 
+36         * 4     NOT AVAILABLE       The user is Not Available 
+37         * 5     DO NOT DISTURB  The user is Do Not Disturb (DND) 
+38         * 6     INVISIBLE               The user is Invisible or appears Offline 
+39         * 7     SKYPE ME                The user is in Skype Me mode
+40         ****************************************/
+41         $url = "http://mystatus.skype.com/".$username.".xml";
+42         //getting contents
+43         $curl = curl_init();
+44         curl_setopt($curl, CURLOPT_URL, $url);
+45         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+46         $data = curl_exec($curl);
+47         curl_close($curl);
+48         
+49         $pattern = '/xml:lang="en">(.*)</';
+50         preg_match($pattern,$data, $match); 
+51         
+52         return $match[1];   
+53     }
+54 }
+55 
+56 //getting skype status icon
+57 $ico = get_skype_status("ar2rsawseen", true, true);
+58 echo "<p>Skype icon:</p>";
+59 echo "<p><img src='".$ico."'/></p>";
+60 
+61 //getting skype status image
+62 $image = get_skype_status("ar2rsawseen", true);
+63 echo "<p>Skype image:</p>";
+64 echo "<p><img src='".$image."'/></p>";
+65 
+66 //getting skype status text
+67 $status = get_skype_status("ar2rsawseen");
+68 echo "<p>Skype status:</p>";
+69 echo "<p>".$status."</p>";
+70 
+71 ?>
